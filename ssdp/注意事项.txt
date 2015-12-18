@@ -1,0 +1,12 @@
+
+文件夹下有两个Makefile文件:Makefile-server, Makefile-client
+Makefile-client是演示windows客户端的查找程序，真正的server的设备发现程序是Makefile-server生成
+
+名字目前暂定为server,可以在TARGET 改成任何你想设置的名字
+
+ssdp_server.c 第15-17行，是将server程序设置为守护进程，
+
+然后在/etc/rc.local文件的尾部添加启动server的路径即可
+
+然后每次开机后，自动启动server程序，发送SSDP协议 
+

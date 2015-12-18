@@ -1,0 +1,12 @@
+CC=gcc
+CCFLAGS= -g
+OBJS = list.c iterator.c daemon.c ssdp_socket.c ssdp_client.c 
+
+TARGET=client
+
+all:$(TARGET)
+
+$(TARGET):$(OBJS)
+	$(CC) $(CCFLAGS) $(OBJS) -o $(TARGET) 
+clean:
+	rm -f $(TARGET) *.o
