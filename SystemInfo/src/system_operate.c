@@ -31,7 +31,6 @@ int get_all_disk_info(char *const caller_space)
 	char tmp_status[NORMAL_LENGTH] = "";
 	char tmp_serial_short[NORMAL_LENGTH] = "";
 
-	printf("begin:\n");
 	//get all device name
 	result = run_shell("lsblk -ln -o NAME,TYPE | grep disk | awk '{print $1}'", tmp);
 	if (result != SUCCESS)
@@ -39,12 +38,10 @@ int get_all_disk_info(char *const caller_space)
 		return result;
 	}
 
-	printf("=%s=\n",tmp);
 
 	char *pointer = NULL;
 	pointer = strtok(tmp, "\n");
 	sprintf(disk_name[disk_name_counter - 1], "%s", pointer);
-	printf("pointer11=%s\n",disk_name[disk_name_counter - 1]);
 	while ((pointer = strtok(NULL, "\n")) != NULL)
 	{
 		disk_name_counter++;
@@ -59,17 +56,13 @@ int get_all_disk_info(char *const caller_space)
 	{
 		return result;
 	}
-//	printf("pointer12=%s\n",disk_name[disk_name_counter - 1]);
-//
-//	printf("pointer1=%s\n",pointer);
+
 	pointer = strtok(tmp, "\n");
 	sprintf(disk_capacity[disk_capacity_counter - 1], "%s", pointer);
-	printf("pointer2=%s\n",pointer);
 	while ((pointer = strtok(NULL, "\n")) != NULL)
 	{
 		disk_capacity_counter++;
 		sprintf(disk_capacity[disk_capacity_counter - 1], "%s", pointer);
-//		printf("pointer3=%s\n",pointer);
 	}
 
 	//build json for caller
@@ -117,7 +110,7 @@ int get_all_disk_info(char *const caller_space)
 			}
 		}
 
-//		printf("tmp_status=%s\n",tmp_status);
+//		printf("%s\n",tmp_status);
 
 		strcat(tmp_capacity, disk_capacity[i]);
 		char *tmp_pointer = NULL;
@@ -233,8 +226,6 @@ int get_all_disk_info(char *const caller_space)
 			tmp_serial_short[counter] = '\0';
 		}
 
-//		printf("0=%s\n",caller_space);
-
 		if ((tmp_pointer = strstr(tmp_disk_infor, "ID_VENDOR=")) != NULL)
 		{
 			char *tmp_tmp_pointer = NULL;
@@ -255,11 +246,8 @@ int get_all_disk_info(char *const caller_space)
 		//skip system disk
 		if((strcmp(tmp_status, "system")) == 0)
 		{
-//			printf("2=%s\n",caller_space);
 			continue;
 		}
-
-		printf("3=%s\n",caller_space);
 
 		strcat(caller_space, "{");
 		strcat(caller_space, "\"path\":\"");
@@ -312,6 +300,8 @@ int get_all_disk_info(char *const caller_space)
 	caller_space[strlen(caller_space) - 1] = '\0';
 
 	strcat(caller_space, "]");
+
+//	printf("%s\n",caller_space);
 
 	//skip system disk
 	if((strcmp(tmp_status, "system")) == 0)

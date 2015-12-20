@@ -37,7 +37,7 @@
 
 #define VARIABLE_NAME				128
 #define NORMAL_LENGTH				1024
-#define MIDDLE_LENGTH				1024
+#define MIDDLE_LENGTH				2048
 #define LARGE_LENGTH				4096
 #define HUGE_LENGTH					1*128*1024
 
