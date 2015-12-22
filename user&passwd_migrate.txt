@@ -1,0 +1,29 @@
+http://www.ghacks.net/2010/02/10/migrate-users-from-one-linux-machine-to-another/
+
+/etc/passwd - Contains information about the user.
+/etc/shadow - Contains the encrypted passwords.
+/etc/group - Contains group information.
+/etc/gshadow - Contains group encrypted passwords.
+/var/spool/mail - Contains users email (the location will depend upon the mail server you use).
+/home/ - Contains users data.
+
+mkdir ~/MOVE
+
+//important
+export UGIDLIMIT=500
+
+//passwd
+awk -v LIMIT=$UGIDLIMIT -F: '($3>=LIMIT) && ($3!=65534)' /etc/passwd > ~/MOVE/passwd.mig
+//group
+awk -v LIMIT=$UGIDLIMIT -F: '($3>=LIMIT) && ($3!=65534)' /etc/group > ~/MOVE/group.mig
+//shadow
+awk -v LIMIT=$UGIDLIMIT -F: '($3>=LIMIT) && ($3!=65534) {print $1}' /etc/passwd | tee - |egrep -f - /etc/shadow > ~/MOVE/shadow.mig
+//gshadow
+cp /etc/gshadow ~/MOVE/gshadow.mig
+//
+tar -zcvpf ~/MOVE/home.tar.gz /home
+
+cat passwd.mig >> /etc/passwd
+cat group.mig >> /etc/group
+cat shadow.mig >> /etc/shadow
+cp gshadow.mig /etc/gshadow
