@@ -15,3 +15,8 @@ awk -v LIMIT=$UGIDLIMIT -F: '($3>=LIMIT) && ($3!=65534)' /etc/passwd > ${HOMEDIR
 awk -v LIMIT=$UGIDLIMIT -F: '($3>=LIMIT) && ($3!=65534)' /etc/group > ${HOMEDIR}/group.mig
 awk -v LIMIT=$UGIDLIMIT -F: '($3>=LIMIT) && ($3!=65534) {print $1}' /etc/passwd | tee - |egrep -f - /etc/shadow > ${HOMEDIR}/shadow.mig
 cp /etc/gshadow ${HOMEDIR}/gshadow.mig
+
+cp /usr/bin/smbpasswd ${HOMEDIR}/smbpasswd.mig
+cp /var/lib/samba/passdb.tdb ${HOMEDIR}/passdb.mig
+
+printf "@finished\n"
