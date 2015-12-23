@@ -1,0 +1,12 @@
+作用：获取pci插槽接口与linux系统中/dev/下存储设备对应情况
+脚本名称：pci_disk.sh
+传参：目前支持BARCELON，脚本后面需跟BARCELON名称
+如;./pic_disk.sh BARCELON
+输出格式如下：
+host0   sda
+host1   sdb
+测例：
+1、root@winsun:~# ./pci_disk.sh BARCELONA|awk '$2=="sda" {print $2}'
+   输出结果：sda
+2、./pci_disk.sh BARCELONA|awk '$2=="sda" {print $1}'
+   输出结果：host0
