@@ -1,0 +1,50 @@
+ad -v //version
+
+one example of afp.conf:
+;
+; Netatalk 3.x configuration file
+; http://netatalk.sourceforge.net/3.0/htmldocs/afp.conf.5.html
+;
+
+[Global]
+; Global server settings
+vol preset = default_for_all_vol
+log file = /var/log/netatalk.log
+uam list = uams_dhx.so,uams_dhx2.so
+save password = no
+
+[default_for_all_vol]
+file perm = 0664
+directory perm = 0774
+cnid scheme = dbd
+valid users = @tmusers
+
+[Homes]
+; basedir regex = /xxxx
+basedir regex = /home
+
+[TimeMachine]
+path = /afp/tm_backup
+time machine = yes
+vol size limit = 350000
+
+
+
+afp.conf
+
+[Global]
+    vol preset = default_for_all_volumes
+    log file = /var/log/netatalk.log
+
+[default_for_all_volumes]
+    file perm = 0600
+    directory perm = 0700
+
+[Homes]
+    basedir regex = /home
+
+[My TimeMachine]
+    path = /home/afp/time_capsule
+    time machine = yes
+    vol size limit = 100000
+
